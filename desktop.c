@@ -109,6 +109,7 @@ time_t cPluginDesktop::WakeupTime(void)
 cOsdObject *cPluginDesktop::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
+  cDesktopMenu::PluginConfDir = ConfigDirectory(Name());
   return new cDesktopMenu(*cString::sprintf("%s/%s", ConfigDirectory(Name()), *menu_filename));
 }
 

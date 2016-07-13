@@ -1,5 +1,8 @@
 #include "menu.h"
 
+#include <vdr/thread.h>
+#include <vdr/tools.h>
+
 
 class cDesktopMenuItem : public cOsdItem {
 private:
@@ -50,6 +53,8 @@ public:
   };
 
 
+cString cDesktopMenu::PluginConfDir;
+
 cDesktopMenu::cDesktopMenu(const char *menu_filename)
 :cOsdMenu("Desktop")
 {
@@ -61,6 +66,7 @@ cDesktopMenu::cDesktopMenu(const char *menu_filename)
   else
      directory = gmenu_tree_get_root_directory(tree);
 
+  SetMenuCategory(mcPlugin);
   Set();
   if (Current() < 0)
      SetCurrent(First());
@@ -73,6 +79,7 @@ cDesktopMenu::cDesktopMenu(GMenuTreeDirectory *Directory)
   tree = NULL;
   directory = Directory;
 
+  SetMenuCategory(mcPlugin);
   Set();
   if (Current() < 0)
      SetCurrent(First());
@@ -121,9 +128,15 @@ eOSState cDesktopMenu::Run()
      if (di->IsDirectory())
         AddSubMenu(new cDesktopMenu(di->Directory()));
      else {
-        const char *desktop_file_path = gmenu_tree_entry_get_desktop_file_path(di->Entry());
-        isyslog("desktop: starting %s", desktop_file_path);
-        // TODO trigger start
+        cString cmd = cString::sprintf("%s/starter", *PluginConfDir);
+        if (FileSize(*cmd) <= 0)
+           Skins.QueueMessage(mtError, *cString::sprintf("missing starter-script %s", *cmd));
+        else {
+           const char *desktop_file_path = gmenu_tree_entry_get_desktop_file_path(di->Entry());
+           cString dfp = strescape(desktop_file_path, "\\\"$");
+           isyslog("desktop: starting \"%s\"", *dfp);
+           SystemExec(*cString::sprintf("%s \"%s\"", *cmd, *dfp), true);
+           }
         return osEnd;
         }
      }

@@ -19,6 +19,8 @@ private:
   eOSState Run(void);
 
 public:
+  static cString PluginConfDir;
+
   cDesktopMenu(const char *menu_filename);
   cDesktopMenu(GMenuTreeDirectory *Directory);
   virtual ~cDesktopMenu(void);
