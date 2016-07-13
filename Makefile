@@ -111,6 +111,7 @@ install-lib: $(SOFILE)
 	install -D $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
 
 install-cfg:
+	mkdir -p $(DESTDIR)$(PLGCONFDIR)
 	cp -pn gnome-applications.menu $(DESTDIR)$(PLGCONFDIR)/gnome-applications.menu
 
 install: install-lib install-i18n install-cfg
