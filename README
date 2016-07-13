@@ -14,6 +14,24 @@ See the file COPYING for more information.
 
 Description:
 
-libmenu is part of gnome-menu and known to be unstable.
-So this plugin may not compile with all versions.
+This plugin parses all desktop-files to assemble a desktop's
+applications menu and display it with the vdr's OSD.
 
+The selected app is started via a helper script "starter"
+which must be located in the plugin's conf-directory.
+It gets the full path to the selected desktop-file.
+
+Build Dependencies:
+
+(Ubuntu package names)
+ - libgnome-menu-dev
+ - vdr-dev
+ - pkg-config
+
+libgnome-menu is known to have an unstable API.
+So this plugin may not compile with all versions.
+Developed with version 3.0.1-0ubuntu9.
+
+gnome-applications.menu is copied from gnome-menu.
+
+http://download.gnome.org/sources/gnome-menus/
