@@ -19,6 +19,8 @@ VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ pri
 PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell PKG_CONFIG_PATH="$$PKG_CONFIG_PATH:../../.." pkg-config --variable=$(1) vdr))
 LIBDIR = $(call PKGCFG,libdir)
 LOCDIR = $(call PKGCFG,locdir)
+CONFDIR = $(call PKGCFG,configdir)
+PLGCONFDIR = $(CONFDIR)/plugins/$(PLUGIN)
 PLGCFG = $(call PKGCFG,plgcfg)
 #
 TMPDIR ?= /tmp
@@ -54,7 +56,7 @@ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 
 ### The object files (add further files here):
 
-OBJS = $(PLUGIN).o parser.o
+OBJS = $(PLUGIN).o menu.o
 
 ### The main target:
 
@@ -108,7 +110,10 @@ $(SOFILE): $(OBJS)
 install-lib: $(SOFILE)
 	install -D $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)
 
-install: install-lib install-i18n
+install-cfg:
+	cp -pn gnome-applications.menu $(DESTDIR)$(PLGCONFDIR)/gnome-applications.menu
+
+install: install-lib install-i18n install-cfg
 
 dist: $(I18Npo) clean
 	@-rm -rf $(TMPDIR)/$(ARCHIVE)

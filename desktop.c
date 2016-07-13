@@ -8,7 +8,7 @@
 
 #include <vdr/plugin.h>
 
-#include "parser.h"
+#include "menu.h"
 
 static const char *VERSION        = "0.0.1";
 static const char *DESCRIPTION    = "desktop apps menu";
@@ -17,6 +17,7 @@ static const char *MAINMENUENTRY  = "Desktop";
 class cPluginDesktop : public cPlugin {
 private:
   // Add any member variables or functions you may need here.
+  cString menu_filename;
 public:
   cPluginDesktop(void);
   virtual ~cPluginDesktop();
@@ -45,6 +46,7 @@ cPluginDesktop::cPluginDesktop(void)
   // Initialize any member variables here.
   // DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
   // VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
+  menu_filename = "gnome-applications.menu";
 }
 
 cPluginDesktop::~cPluginDesktop()
@@ -107,7 +109,7 @@ time_t cPluginDesktop::WakeupTime(void)
 cOsdObject *cPluginDesktop::MainMenuAction(void)
 {
   // Perform the action when selected from the main VDR menu.
-  return NULL;
+  return new cDesktopMenu(*cString::sprintf("%s/%s", ConfigDirectory(Name()), *menu_filename));
 }
 
 cMenuSetupPage *cPluginDesktop::SetupMenu(void)
@@ -119,6 +121,8 @@ cMenuSetupPage *cPluginDesktop::SetupMenu(void)
 bool cPluginDesktop::SetupParse(const char *Name, const char *Value)
 {
   // Parse your own setup parameters and store their values.
+  if (strcasecmp(Name, "menufile") == 0)
+     menu_filename = Value;
   return false;
 }
 
@@ -137,11 +141,6 @@ const char **cPluginDesktop::SVDRPHelpPages(void)
 cString cPluginDesktop::SVDRPCommand(const char *Command, const char *Option, int &ReplyCode)
 {
   // Process SVDRP commands this plugin implements
-  if (strcasecmp(Command, "TEST") == 0) {
-     cParser::Test(Option);
-     ReplyCode = 900;
-     return "Test done";
-     }
   return NULL;
 }
 
