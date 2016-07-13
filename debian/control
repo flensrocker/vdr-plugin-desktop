@@ -1,0 +1,23 @@
+Source: vdr-plugin-desktop
+Section: video
+Priority: extra
+Maintainer: Lars Hanisch <dvb@flensrocker.de>
+Build-Depends: debhelper (>= 8), vdr-dev (>= 2.2.0), libgnome-menu-dev, pkg-config
+Standards-Version: 3.9.1
+Homepage: https://github.com/flensrocker/vdr-plugin-desktop
+
+Package: vdr-plugin-desktop
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${vdr:Depends}
+Description: A VDR plugin, start desktop apps from OSD
+ This VDR-plugin will display all installed desktop apps
+ in the OSD.
+
+Package: vdr-plugin-desktop-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: vdr-plugin-desktop (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for vdr-plugin-desktop
+ .
+ This package contains only the debugging symbols for vdr-plugin-desktop
