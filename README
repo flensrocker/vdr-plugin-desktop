@@ -24,13 +24,13 @@ It gets the full path to the selected desktop-file.
 Build Dependencies:
 
 (Ubuntu package names)
- - libgnome-menu-dev
+ - libgnome-menu-3-dev
  - vdr-dev
  - pkg-config
 
 libgnome-menu is known to have an unstable API.
 So this plugin may not compile with all versions.
-Developed with version 3.0.1-0ubuntu9.
+Developed with version 3.13.3-6ubuntu3.1
 
 gnome-applications.menu is copied from gnome-menu.
 

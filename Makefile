@@ -28,8 +28,8 @@ TMPDIR ?= /tmp
 ### The compiler options:
 
 export CFLAGS   = $(call PKGCFG,cflags)
-export CXXFLAGS = $(call PKGCFG,cxxflags) $(shell pkg-config --cflags libgnome-menu)
-export LDADD = $(shell pkg-config --libs libgnome-menu)
+export CXXFLAGS = $(call PKGCFG,cxxflags) $(shell pkg-config --cflags libgnome-menu-3.0)
+export LDADD = $(shell pkg-config --libs libgnome-menu-3.0)
 
 ### The version number of VDR's plugin API:
 
