@@ -2,7 +2,7 @@ Source: vdr-plugin-desktop
 Section: video
 Priority: extra
 Maintainer: Lars Hanisch <dvb@flensrocker.de>
-Build-Depends: debhelper (>= 8), vdr-dev (>= 2.2.0), libgnome-menu-dev, pkg-config
+Build-Depends: debhelper (>= 8), vdr-dev (>= 2.2.0), libgnome-menu-3-dev, pkg-config
 Standards-Version: 3.9.1
 Homepage: https://github.com/flensrocker/vdr-plugin-desktop
 
