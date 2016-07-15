@@ -61,13 +61,19 @@ cString cDesktopMenu::PluginConfDir;
 cDesktopMenu::cDesktopMenu(const char *menu_filename)
 :cOsdMenu("Desktop")
 {
+  GError *err = NULL;
+  directory = NULL;
   tree = gmenu_tree_new_for_path(menu_filename, GMENU_TREE_FLAGS_NONE);
-  if (tree == NULL) {
-     directory = NULL;
+  if (tree == NULL)
      esyslog("desktop: tree is NULL, used menu-file %s", menu_filename);
-     }
+  else if (!gmenu_tree_load_sync(tree, &err))
+     esyslog("desktop: loading tree from %s failed: %s", menu_filename, err->message);
   else
      directory = gmenu_tree_get_root_directory(tree);
+  if (err != NULL) {
+     g_error_free(err);
+     err = NULL;
+     }
 
   SetMenuCategory(mcPlugin);
   Set();
@@ -96,7 +102,7 @@ cDesktopMenu::~cDesktopMenu(void)
      directory = NULL;
      }
   if (tree != NULL) {
-     gmenu_tree_item_unref(tree);
+     g_object_unref(tree);
      tree = NULL;
      }
 }
