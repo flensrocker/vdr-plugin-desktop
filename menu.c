@@ -25,18 +25,11 @@ public:
     char *name = g_desktop_app_info_get_string(appInfo, "Name");
     SetText(name);
     free(name);
+    g_object_unref(appInfo);
   }
 
   virtual ~cDesktopMenuItem(void)
   {
-    if (directory != NULL) {
-       gmenu_tree_item_unref(directory);
-       directory = NULL;
-       }
-    if (entry != NULL) {
-       gmenu_tree_item_unref(entry);
-       entry = NULL;
-       }
   }
 
   bool IsDirectory(void) const
@@ -97,10 +90,6 @@ cDesktopMenu::cDesktopMenu(GMenuTreeDirectory *Directory)
 
 cDesktopMenu::~cDesktopMenu(void)
 {
-  if (directory != NULL) {
-     gmenu_tree_item_unref(directory);
-     directory = NULL;
-     }
   if (tree != NULL) {
      g_object_unref(tree);
      tree = NULL;
