@@ -10,7 +10,7 @@
 
 #include "menu.h"
 
-static const char *VERSION        = "0.0.1";
+static const char *VERSION        = "0.0.2";
 static const char *DESCRIPTION    = "desktop apps menu";
 static const char *MAINMENUENTRY  = "Desktop";
 
