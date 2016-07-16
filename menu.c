@@ -25,7 +25,6 @@ public:
     char *name = g_desktop_app_info_get_string(appInfo, "Name");
     SetText(name);
     free(name);
-    g_object_unref(appInfo);
   }
 
   virtual ~cDesktopMenuItem(void)
